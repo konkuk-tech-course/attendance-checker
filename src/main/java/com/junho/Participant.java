@@ -18,7 +18,7 @@ public class Participant {
         this.attendance = new EnumMap<>(DayOfWeek.class);
     }
 
-    public double getRate(){
+    public double getRate() {
         long count = this.attendance.values().stream()
                 .filter(value -> value)
                 .count();
@@ -39,8 +39,12 @@ public class Participant {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Participant that = (Participant) o;
         return getUsername().equals(that.getUsername());
     }

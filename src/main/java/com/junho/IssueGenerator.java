@@ -14,7 +14,7 @@ public class IssueGenerator {
 
     public static final String LABEL = "documentation";
 
-    public void createIssue() throws IOException{
+    public void createIssue() throws IOException {
         GHRepository repository = getRepositoryFromGitHub();
         final String title = generateTitle();
         final String content = generateIssueBody();
@@ -47,7 +47,7 @@ public class IssueGenerator {
             IssueGenerator issueGenerator = new IssueGenerator();
             issueGenerator.createIssue();
         } catch (IOException e) {
-            throw new RuntimeException("Issue가 정상적으로 생성되지 않았습니다.",e);
+            throw new RuntimeException("Issue가 정상적으로 생성되지 않았습니다.", e);
         }
     }
 }
