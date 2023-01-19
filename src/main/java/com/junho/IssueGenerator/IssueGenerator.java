@@ -1,4 +1,4 @@
-package com.junho;
+package com.junho.IssueGenerator;
 
 import com.junho.constant.PrivateInfo;
 import org.kohsuke.github.GHRepository;
