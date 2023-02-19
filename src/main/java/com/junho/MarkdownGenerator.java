@@ -1,9 +1,9 @@
 package com.junho;
 
+import static com.junho.constant.DayOfWeek.DAY_OF_WEEK_COUNT;
+
 import com.junho.constant.DayOfWeek;
 import com.junho.constant.PrivateInfo;
-import org.kohsuke.github.*;
-
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,13 +12,23 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
-import java.time.temporal.ChronoField;
 import java.time.temporal.TemporalAdjusters;
 import java.time.temporal.WeekFields;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.stream.Collectors;
-
-import static com.junho.constant.DayOfWeek.DAY_OF_WEEK_COUNT;
+import org.kohsuke.github.GHIssue;
+import org.kohsuke.github.GHIssueComment;
+import org.kohsuke.github.GHIssueState;
+import org.kohsuke.github.GHRepository;
+import org.kohsuke.github.GitHub;
 
 // TODO: IssueGenerator에서 Map에 담은 issue를 돌면서 comment마다 빼서 markdown 만들기
 public class MarkdownGenerator {
@@ -64,7 +74,7 @@ public class MarkdownGenerator {
             System.out.println("matchedDay = " + matchedDay);
             currentWeekIssues.put(matchedDay, issue);
             //TODO: 최근 날짜 부터 ISSUE를 가져오는데 MONDAY까지만 가져오기
-            if (matchedDay == DayOfWeek.MONDAY){
+            if (matchedDay == DayOfWeek.MONDAY) {
                 break;
             }
         }
@@ -99,7 +109,7 @@ public class MarkdownGenerator {
         }
         // TODO: participants 이름 순으로 정렬
         sortParticipantsByUsername();
-        participants.forEach( i -> System.out.println(i.getUsername() + i.getAttendance()));
+        participants.forEach(i -> System.out.println(i.getUsername() + i.getAttendance()));
     }
 
     private void setParticipantsWithComments(DayOfWeek day, GHIssue gitHubIssue) throws IOException {
@@ -148,7 +158,7 @@ public class MarkdownGenerator {
 
         List<String> dayOfWeeks = Arrays.stream(DayOfWeek.values())
                 .map(DayOfWeek::toString)
-                .collect(Collectors.toList());
+                .toList();
         //TODO: 기본 테이블 형식 세팅
         for (String dayOfWeek : dayOfWeeks) {
             table.append(String.format(" %s |", dayOfWeek));
@@ -213,7 +223,7 @@ public class MarkdownGenerator {
         String sunday = thisSunday.format(DateTimeFormatter.ofPattern("MM월 dd일"));
 
         String period = "(" + monday + " ~ " + sunday + ")";
-        return "## :pushpin: " + weekOfYear + "주차 출석 현황 "+period+"\n\n";
+        return "## :pushpin: " + weekOfYear + "주차 출석 현황 " + period + "\n\n";
     }
 
     private void updateReadMeWithCurrentAttendance(String pathName) throws IOException {
